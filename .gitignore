@@ -46,3 +46,4 @@ docker-compose.override.yml
 *.log
 
 .agents/
+.docs/
