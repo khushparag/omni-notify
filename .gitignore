@@ -44,3 +44,5 @@ dist/
 ### Omni Notify specific ###
 docker-compose.override.yml
 *.log
+
+.agents/
