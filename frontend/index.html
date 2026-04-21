@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omni-Notify Subscription</title>
+    <meta name="description" content="Subscribe to Omni-Notify for scalable multi-channel notifications via Razorpay.">
+    <!-- Import Razorpay SDK Checkout purely dynamically via CDN -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1>Scale Your Notifications</h1>
+            <p>Join Omni-Notify today. Reliable multi-channel delivery across SMS, Email, and WhatsApp backed by high-throughput resilient Kafka queues.</p>
+        </header>
+
+        <main class="pricing-cards">
+            <!-- Basic Tier -->
+            <article class="card">
+                <h3>Starter</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Perfect for prototyping.</p>
+                <div class="price">₹999<span>/mo</span></div>
+                
+                <ul class="features">
+                    <li>10,000 Messages per month</li>
+                    <li>Standard Delivery Rate</li>
+                    <li>Email & SMS Support</li>
+                    <li>Community Discord Access</li>
+                </ul>
+                
+                <button class="btn" onclick="startCheckout('plan_starter_999')">Select Starter</button>
+            </article>
+
+            <!-- Pro Tier -->
+            <article class="card card-popular">
+                <span class="popular-badge">Most Popular</span>
+                <h3>Enterprise</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">For scaling production apps.</p>
+                <div class="price">₹4,999<span>/mo</span></div>
+                
+                <ul class="features">
+                    <li>Unlimited Deliveries</li>
+                    <li>Dedicated Priority OTP Queues</li>
+                    <li>WhatsApp Green Tick Support</li>
+                    <li>24/7 Priority SLA</li>
+                </ul>
+                
+                <button class="btn btn-primary" onclick="startCheckout('plan_enterprise_4999')">Upgrade Now</button>
+            </article>
+        </main>
+    </div>
+
+    <script>
+        // Real logic wrapping the remote Razorpay script imported above.
+        async function startCheckout(planId) {
+            
+            // Simulating API latency visually before modal pops
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "Initializing Checkout...";
+            btn.style.opacity = "0.7";
+            
+            setTimeout(() => {
+                const options = {
+                    "key": "rzp_test_YOUR_KEY", // Replace with Key ID generated from the Razorpay Dashboard
+                    "amount": planId === 'plan_starter_999' ? 99900 : 499900, // Denomination is in the smallest unit (paise)
+                    "currency": "INR",
+                    "name": "Omni-Notify Subscription",
+                    "description": "Premium Notification Infrastructure Engine",
+                    "image": "https://cdn.razorpay.com/logos/GL1SsqE6FDE08q_medium.png", // Example Icon
+                    "handler": function (response){
+                        // Invoked upon successful Razorpay gateway clearance
+                        alert(`Payment Successful!\nPayment ID: ${response.razorpay_payment_id}\n\nThe Razorpay Webhub has actively notified the backend independently to activate the user subscription!`);
+                        
+                        /* Production API hook
+                        fetch('http://localhost:8082/api/v1/subscriptions/verify', {
+                            method: 'POST',
+                            body: JSON.stringify(response)
+                        });
+                        */
+                    },
+                    "prefill": {
+                        "name": "Developer User",
+                        "email": "dev@omninotify.local",
+                        "contact": "9999999999"
+                    },
+                    "theme": {
+                        "color": "#6366f1"
+                    }
+                };
+                
+                const rzp1 = new Razorpay(options);
+                rzp1.on('payment.failed', function (response){
+                    alert("Payment Failed: " + response.error.description);
+                });
+                rzp1.open();
+
+                // Reset Button state
+                btn.innerText = originalText;
+                btn.style.opacity = "1";
+            }, 500); // 500ms loader style
+        }
+    </script>
+</body>
+</html>
