@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omni-Notify Subscription</title>
     <meta name="description" content="Subscribe to Omni-Notify for scalable multi-channel notifications via Razorpay.">
-    <!-- Import Razorpay SDK Checkout purely dynamically via CDN -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="config.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -66,7 +66,7 @@
             
             setTimeout(() => {
                 const options = {
-                    "key": "rzp_test_YOUR_KEY", // Replace with Key ID generated from the Razorpay Dashboard
+                    "key": RAZORPAY_KEY, // Sourced natively from config.js
                     "amount": planId === 'plan_starter_999' ? 99900 : 499900, // Denomination is in the smallest unit (paise)
                     "currency": "INR",
                     "name": "Omni-Notify Subscription",

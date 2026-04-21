@@ -2,6 +2,8 @@ server:
   port: 8082
   
 spring:
+  profiles:
+    include: secrets
   application:
     name: subscription-service
   datasource:

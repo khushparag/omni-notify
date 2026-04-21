@@ -47,4 +47,8 @@ docker-compose.override.yml
 
 .agents/
 docs/
+
+# Local Secrets
+**/application-secrets.yml
+frontend/config.js
 .docs/
