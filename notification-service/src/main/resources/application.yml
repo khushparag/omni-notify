@@ -2,7 +2,7 @@ spring:
   application:
     name: notification-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/omninotify
+    url: jdbc:postgresql://localhost:5433/omninotify
     username: postgres
     password: password
   jpa:
@@ -16,3 +16,9 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID:default}
+  auth-token: ${TWILIO_AUTH_TOKEN:default}
+  from-number: ${TWILIO_FROM_NUMBER:default}
+

@@ -23,5 +23,6 @@
 		<dependency><groupId>org.testcontainers</groupId><artifactId>postgresql</artifactId><scope>test</scope></dependency>
         <dependency><groupId>org.testcontainers</groupId><artifactId>kafka</artifactId><scope>test</scope></dependency>
         <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-testcontainers</artifactId><scope>test</scope></dependency>
+        <dependency><groupId>com.twilio.sdk</groupId><artifactId>twilio</artifactId><version>10.0.0</version></dependency>
 	</dependencies>
 </project>
